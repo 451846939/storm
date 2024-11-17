@@ -217,7 +217,7 @@ def clean_up_section(text):
             or p.startswith("In conclusion")
         ):
             continue
-        if "# Summary" in p or "# Conclusion" in p:
+        if "# 概要" in p or "# 结论" in p:
             summary_sec_flag = True
             continue
         output_paragraphs.append(p)

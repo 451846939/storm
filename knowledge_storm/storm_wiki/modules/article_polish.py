@@ -42,7 +42,7 @@ class StormArticlePolishingModule(ArticlePolishingModule):
         polish_result = self.polish_page(
             topic=topic, draft_page=article_text, polish_whole_page=remove_duplicate
         )
-        lead_section = f"# summary\n{polish_result.lead_section}"
+        lead_section = f"# 概要\n{polish_result.lead_section}"
         polished_article = "\n\n".join([lead_section, polish_result.page])
         polished_article_dict = ArticleTextProcessing.parse_article_into_dict(
             polished_article
@@ -54,22 +54,22 @@ class StormArticlePolishingModule(ArticlePolishingModule):
 
 
 class WriteLeadSection(dspy.Signature):
-    """Write a lead section for the given Wikipedia page with the following guidelines:
-    1. The lead should stand on its own as a concise overview of the article's topic. It should identify the topic, establish context, explain why the topic is notable, and summarize the most important points, including any prominent controversies.
-    2. The lead section should be concise and contain no more than four well-composed paragraphs.
-    3. The lead section should be carefully sourced as appropriate. Add inline citations (e.g., "Washington, D.C., is the capital of the United States.[1][3].") where necessary.
+    """为给定的维基百科页面撰写引言部分，需遵循以下准则：
+    1. 引言部分应当独立成段，简要概述文章主题。它应标明主题，建立背景，解释该主题的重要性，并总结最重要的要点，包括任何显著的争议。
+    2. 引言部分应简明扼要，不超过四个结构良好的段落。
+    3. 引言部分应适当引用来源。在必要处添加行内引用（例如，“美国的首都是华盛顿特区[1][3]。”）。
     """
 
-    topic = dspy.InputField(prefix="The topic of the page: ", format=str)
-    draft_page = dspy.InputField(prefix="The draft page:\n", format=str)
-    lead_section = dspy.OutputField(prefix="Write the lead section:\n", format=str)
+    topic = dspy.InputField(prefix="页面的主题：", format=str)
+    draft_page = dspy.InputField(prefix="草稿页面：\n", format=str)
+    lead_section = dspy.OutputField(prefix="撰写引言部分：\n", format=str)
 
 
 class PolishPage(dspy.Signature):
-    """You are a faithful text editor that is good at finding repeated information in the article and deleting them to make sure there is no repetition in the article. You won't delete any non-repeated part in the article. You will keep the inline citations and article structure (indicated by "#", "##", etc.) appropriately. Do your job for the following article."""
+    """你是一位细心的文本编辑者，擅长找到文章中的重复信息并将其删除，以确保文章没有重复内容。你不会删除任何非重复部分，并会保留行内引用和文章结构（由“#”、“##”等表示）格式。请为以下文章执行你的工作。"""
 
-    draft_page = dspy.InputField(prefix="The draft article:\n", format=str)
-    page = dspy.OutputField(prefix="Your revised article:\n", format=str)
+    draft_page = dspy.InputField(prefix="草稿文章：\n", format=str)
+    page = dspy.OutputField(prefix="修改后的文章：\n", format=str)
 
 
 class PolishPageModule(dspy.Module):

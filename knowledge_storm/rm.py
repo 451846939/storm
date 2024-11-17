@@ -728,7 +728,8 @@ class DuckDuckGoSearchRM(dspy.Retrieve):
         snippet_chunk_size: int = 1000,
         webpage_helper_max_threads=10,
         safe_search: str = "On",
-        region: str = "us-en",
+        # region: str = "us-en",
+        region: str = "zh-cn",
     ):
         """
         Params:
@@ -786,6 +787,8 @@ class DuckDuckGoSearchRM(dspy.Retrieve):
         giveup=giveup_hdlr,
     )
     def request(self, query: str):
+        if query=="":
+            return []
         results = self.ddgs.text(
             query, max_results=self.k, backend=self.duck_duck_go_backend
         )

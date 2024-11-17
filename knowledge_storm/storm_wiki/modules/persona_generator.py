@@ -46,24 +46,25 @@ def get_wiki_page_title_and_toc(url):
 
 
 class FindRelatedTopic(dspy.Signature):
-    """I'm writing a Wikipedia page for a topic mentioned below. Please identify and recommend some Wikipedia pages on closely related subjects. I'm looking for examples that provide insights into interesting aspects commonly associated with this topic, or examples that help me understand the typical content and structure included in Wikipedia pages for similar topics.
-    Please list the urls in separate lines."""
+    """我正在为下面提到的主题撰写一个维基百科页面。请识别并推荐一些主题密切相关的维基百科页面。
+    我需要一些能提供与该主题相关的有趣方面见解的示例，或帮助我了解类似主题在维基百科页面中通常包含的内容和结构的示例。
+    请将每个网址分行列出。"""
 
-    topic = dspy.InputField(prefix="Topic of interest:", format=str)
+    topic = dspy.InputField(prefix="感兴趣的主题：", format=str)
     related_topics = dspy.OutputField(format=str)
 
 
 class GenPersona(dspy.Signature):
-    """You need to select a group of Wikipedia editors who will work together to create a comprehensive article on the topic. Each of them represents a different perspective, role, or affiliation related to this topic. You can use other Wikipedia pages of related topics for inspiration. For each editor, add a description of what they will focus on.
-    Give your answer in the following format: 1. short summary of editor 1: description\n2. short summary of editor 2: description\n...
+    """你需要选择一组维基百科编辑者，他们将协作撰写该主题的综合文章。每个编辑者代表与该主题相关的不同视角、角色或背景。你可以参考其他相关主题的维基百科页面以获取灵感。为每位编辑者添加他们关注内容的描述。
+    请按照以下格式给出答案：
+    1. 编辑者 1 的简短概述：描述\n2. 编辑者 2 的简短概述：描述\n...
     """
 
-    topic = dspy.InputField(prefix="Topic of interest:", format=str)
+    topic = dspy.InputField(prefix="感兴趣的主题：", format=str)
     examples = dspy.InputField(
-        prefix="Wiki page outlines of related topics for inspiration:\n", format=str
+        prefix="相关主题的维基页面概述以供参考：\n", format=str
     )
     personas = dspy.OutputField(format=str)
-
 
 class CreateWriterWithPersona(dspy.Module):
     """Discover different perspectives of researching the topic by reading Wikipedia pages of related topics."""
@@ -149,6 +150,6 @@ class StormPersonaGenerator:
                 and up to `max_num_persona` additional personas generated based on the topic.
         """
         personas = self.create_writer_with_persona(topic=topic)
-        default_persona = "Basic fact writer: Basic fact writer focusing on broadly covering the basic facts about the topic."
+        default_persona = "基础事实撰写者：专注于广泛覆盖该主题的基础事实的撰写者。"
         considered_personas = [default_persona] + personas.personas[:max_num_persona]
         return considered_personas

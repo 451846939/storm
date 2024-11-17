@@ -126,19 +126,19 @@ class WriteOutline(dspy.Module):
 
 
 class WritePageOutline(dspy.Signature):
-    """Write an outline for a Wikipedia page.
-    Here is the format of your writing:
-    1. Use "#" Title" to indicate section title, "##" Title" to indicate subsection title, "###" Title" to indicate subsubsection title, and so on.
-    2. Do not include other information.
-    3. Do not include topic name itself in the outline.
+    """撰写一个维基百科页面的大纲。
+    请按照以下格式编写：
+    1. 使用“# 标题”表示章节标题，“## 标题”表示小节标题，“### 标题”表示子小节标题，依此类推。
+    2. 不要包含其他信息。
+    3. 不要在大纲中包含主题名称本身。
     """
 
-    topic = dspy.InputField(prefix="The topic you want to write: ", format=str)
-    outline = dspy.OutputField(prefix="Write the Wikipedia page outline:\n", format=str)
+    topic = dspy.InputField(prefix="您要撰写的主题：", format=str)
+    outline = dspy.OutputField(prefix="撰写维基百科页面大纲：\n", format=str)
 
 
 class NaiveOutlineGen(dspy.Module):
-    """Generate the outline with LLM's parametric knowledge directly."""
+    """直接使用大型语言模型的参数化知识生成大纲。"""
 
     def __init__(self):
         super().__init__()
@@ -151,11 +151,11 @@ class NaiveOutlineGen(dspy.Module):
 
 
 class WritePageOutlineFromConv(dspy.Signature):
-    """Improve an outline for a Wikipedia page. You already have a draft outline that covers the general information. Now you want to improve it based on the information learned from an information-seeking conversation to make it more informative.
-    Here is the format of your writing:
-    1. Use "#" Title" to indicate section title, "##" Title" to indicate subsection title, "###" Title" to indicate subsubsection title, and so on.
-    2. Do not include other information.
-    3. Do not include topic name itself in the outline.
+    """改进一个维基百科页面的大纲。你已经有一个涵盖一般信息的初步大纲。现在，你希望根据信息检索对话中学到的信息来改进它，使其更具信息性。
+    请按照以下格式编写：
+    1. 使用“# 标题”表示章节标题，“## 标题”表示小节标题，“### 标题”表示子小节标题，依此类推。
+    2. 不要包含其他信息。
+    3. 不要在大纲中包含主题名称本身。
     """
 
     topic = dspy.InputField(prefix="The topic you want to write: ", format=str)

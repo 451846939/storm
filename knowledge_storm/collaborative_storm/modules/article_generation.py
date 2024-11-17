@@ -108,16 +108,16 @@ class ArticleGenerationModule(dspy.Module):
 
 
 class WriteSection(dspy.Signature):
-    """Write a Wikipedia section based on the collected information. You will be given the topic, the section you are writing and relevant information.
-    Each information will be provided with the raw content along with question and query lead to that information.
-    Here is the format of your writing:
-    Use [1], [2], ..., [n] in line (for example, "The capital of the United States is Washington, D.C.[1][3]."). You DO NOT need to include a References or Sources section to list the sources at the end.
+    """根据收集到的信息撰写维基百科的一个章节。你将获得主题、需要撰写的章节名称和相关信息。
+    每条信息将包含原始内容，以及与该信息相关的问题和查询。
+    请按照以下格式撰写：
+    在句中使用[1]、[2]、...、[n]的形式（例如，“美国的首都是华盛顿特区[1][3]。”）。你不需要在结尾添加参考或来源部分。
     """
 
-    info = dspy.InputField(prefix="The collected information:\n", format=str)
-    topic = dspy.InputField(prefix="The topic of the page: ", format=str)
-    section = dspy.InputField(prefix="The section you need to write: ", format=str)
+    info = dspy.InputField(prefix="收集到的信息：\n", format=str)
+    topic = dspy.InputField(prefix="页面的主题：", format=str)
+    section = dspy.InputField(prefix="需要撰写的章节：", format=str)
     output = dspy.OutputField(
-        prefix="Write the section with proper inline citations (Start your writing. Don't include the page title, section name, or try to write other sections. Do not start the section with topic name.):\n",
+        prefix="撰写章节内容并正确使用行内引用（开始撰写，不包括页面标题、章节名称，也不要尝试撰写其他章节。不要以主题名称开头）：\n",
         format=str,
     )

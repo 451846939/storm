@@ -21,6 +21,8 @@ from argparse import ArgumentParser
 
 from dspy import Example
 
+sys.path.append("./storm")
+
 from knowledge_storm.lm import OllamaClient
 from knowledge_storm.rm import YouRM, BingSearch, BraveRM, SerperRM, DuckDuckGoSearchRM, TavilySearchRM, SearXNG
 from knowledge_storm import STORMWikiRunnerArguments, STORMWikiRunner, STORMWikiLMConfigs
@@ -87,9 +89,9 @@ def main(args):
     # and OutputField in the prompt (i.e., dspy.Signature).
     find_related_topic_example = Example(
         topic="Knowledge Curation",
-        related_topics="https://en.wikipedia.org/wiki/Knowledge_management\n"
-                       "https://en.wikipedia.org/wiki/Information_science\n"
-                       "https://en.wikipedia.org/wiki/Library_science\n"
+        related_topics="https://zh.wikipedia.org/wiki/知识管理\n"
+                       "https://zh.wikipedia.org/wiki/信息科学\n"
+                       "https://zh.wikipedia.org/wiki/图书馆信息学\n"
     )
     gen_persona_example = Example(
         topic="Knowledge Curation",

@@ -30,11 +30,11 @@ class QuestionToQuery(dspy.Signature):
 
 
 class AnswerQuestion(dspy.Signature):
-    """You are an expert who can use information effectively. You have gathered the related information and will now use the information to form a response.
-    Make your response as informative as possible and make sure every sentence is supported by the gathered information.
-    If [Gathered information] is not directly related to the [Topic] and [Question], provide the most relevant answer you can based on the available information, and explain any limitations or gaps.
-    Use [1], [2], ..., [n] in line (for example, "The capital of the United States is Washington, D.C.[1][3].").
-    You DO NOT need to include a References or Sources section to list the sources at the end. The style of writing should be formal.
+    """你是一位能够有效利用信息的专家。你已经收集了相关信息，现在将使用这些信息来形成回答。
+    请使你的回答尽可能详细，并确保每一句话都基于收集到的信息。
+    如果[收集到的信息]与[主题]和[问题]没有直接关联，请根据现有信息提供最相关的回答，并解释任何信息的限制或缺失之处。
+    在句中使用[1]、[2]、...、[n]（例如，“美国的首都是华盛顿特区[1][3]。”）。
+    你不需要在结尾添加参考或来源部分。写作风格应保持正式。
     """
 
     topic = dspy.InputField(prefix="Topic you are discussing about:", format=str)

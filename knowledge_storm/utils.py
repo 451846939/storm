@@ -521,7 +521,7 @@ class ArticleTextProcessing:
                 or p.startswith("In conclusion")
             ):
                 continue
-            if "# Summary" in p or "# Conclusion" in p:
+            if "# 概要" in p or "# 结论" in p:
                 summary_sec_flag = True
                 continue
             output_paragraphs.append(p)
@@ -719,26 +719,26 @@ def user_input_appropriateness_check(user_input):
     if not re.match(r'^[a-zA-Z0-9\s\-"\,\.?\']*$', user_input):
         return "The input contains invalid characters. The input should only contain a-z, A-Z, 0-9, space, -/\"/,./?/'."
 
-    prompt = f"""Here is a topic input into a knowledge curation engine that can write a Wikipedia-like article for the topic. Please judge whether it is appropriate or not for the engine to curate information for this topic based on English search engine. The following types of inputs are inappropriate:
-1. Inputs that may be related to illegal, harmful, violent, racist, or sexual purposes.
-2. Inputs that are given using languages other than English. Currently, the engine can only support English.
-3. Inputs that are related to personal experience or personal information. Currently, the engine can only use information from the search engine.
-4. Inputs that are not aimed at topic research or inquiry. For example, asks requiring detailed execution, such as calculations, programming, or specific service searches fall outside the engine's scope of capabilities.
-If the topic is appropriate for the engine to process, output "Yes."; otherwise, output "No. The input violates reason [1/2/3/4]".
-User input: {user_input}"""
+    prompt = f"""以下是输入到知识整合引擎的一个主题，该引擎可以为该主题撰写类似维基百科的文章。请根据英文搜索引擎判断这个主题是否适合由引擎整合信息。以下类型的输入是不合适的：
+1. 可能涉及非法、有害、暴力、种族主义或色情目的的输入。
+2. 使用非英语输入的内容。目前该引擎仅支持英文。
+3. 涉及个人经历或个人信息的输入。目前该引擎只能使用来自搜索引擎的信息。
+4. 不是以研究或查询为目的的输入。例如，要求详细执行的指令（如计算、编程或特定服务搜索）不在引擎的能力范围内。
+如果该主题适合引擎处理，输出“是”；否则，输出“否，输入不符合原因[1/2/3/4]”。
+用户输入: {user_input}"""
     reject_reason_info = {
-        1: "Sorry, this input may be related to sensitive topics. Please try another topic. "
-        "(Our input filtering uses OpenAI GPT-4o-mini, which may result in false positives. "
-        "We apologize for any inconvenience.)",
-        2: "Sorry, the current engine can only support English. Please try another topic. "
-        "(Our input filtering uses OpenAI GPT-4o-mini, which may result in false positives. "
-        "We apologize for any inconvenience.)",
-        3: "Sorry, the current engine cannot process topics related to personal experience. Please try another topic. "
-        "(Our input filtering uses OpenAI GPT-4o-mini, which may result in false positives. "
-        "We apologize for any inconvenience.)",
-        4: "Sorry, STORM cannot follow arbitrary instruction. Please input a topic you want to learn about. "
-        "(Our input filtering uses OpenAI GPT-4o-mini, which may result in false positives. "
-        "We apologize for any inconvenience.)",
+        1: "抱歉，该输入可能涉及敏感话题。请尝试另一个主题。"
+           "（我们的输入过滤使用了OpenAI GPT-4o-mini，可能会导致误判，"
+           "对此带来的不便我们深表歉意。）",
+        2: "抱歉，目前引擎仅支持英语。请尝试另一个主题。"
+           "（我们的输入过滤使用了OpenAI GPT-4o-mini，可能会导致误判，"
+           "对此带来的不便我们深表歉意。）",
+        3: "抱歉，目前引擎无法处理与个人经历相关的主题。请尝试另一个主题。"
+           "（我们的输入过滤使用了OpenAI GPT-4o-mini，可能会导致误判，"
+           "对此带来的不便我们深表歉意。）",
+        4: "抱歉，STORM无法执行随意指令。请输入一个您想了解的主题。"
+           "（我们的输入过滤使用了OpenAI GPT-4o-mini，可能会导致误判，"
+           "对此带来的不便我们深表歉意。）",
     }
 
     try:

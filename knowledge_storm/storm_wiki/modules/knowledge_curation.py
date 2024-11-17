@@ -152,38 +152,38 @@ class AskQuestionWithPersona(dspy.Signature):
 
 
 class QuestionToQuery(dspy.Signature):
-    """You want to answer the question using Google search. What do you type in the search box?
-    Write the queries you will use in the following format:
-    - query 1
-    - query 2
+    """请使用 Google 搜索来回答问题。你会在搜索框中输入什么内容？
+    按以下格式写出你的查询：
+    - 查询 1
+    - 查询 2
     ...
-    - query n"""
+    - 查询 n"""
 
-    topic = dspy.InputField(prefix="Topic you are discussing about: ", format=str)
-    question = dspy.InputField(prefix="Question you want to answer: ", format=str)
+    topic = dspy.InputField(prefix="讨论的主题: ", format=str)
+    question = dspy.InputField(prefix="想要回答的问题: ", format=str)
     queries = dspy.OutputField(format=str)
 
 
 class AnswerQuestion(dspy.Signature):
-    """You are an expert who can use information effectively. You are chatting with a Wikipedia writer who wants to write a Wikipedia page on topic you know. You have gathered the related information and will now use the information to form a response.
-    Make your response as informative as possible, ensuring that every sentence is supported by the gathered information. If the [gathered information] is not directly related to the [topic] or [question], provide the most relevant answer based on the available information. If no appropriate answer can be formulated, respond with, “I cannot answer this question based on the available information,” and explain any limitations or gaps.
+    """你是一位能够有效利用信息的专家。你正在与一位维基百科撰稿人交谈，对方希望撰写你熟悉的主题的维基百科页面。你已经收集了相关信息，现在将使用这些信息来形成回答。
+    请尽可能使你的回答信息丰富，确保每一句话都基于收集到的信息。如果[收集到的信息]与[主题]或[问题]没有直接关联，请根据可用信息提供最相关的回答。如果无法给出合适的回答，请回复“我无法根据现有信息回答这个问题”，并解释任何信息的限制或缺失之处。
     """
 
-    topic = dspy.InputField(prefix="Topic you are discussing about:", format=str)
-    conv = dspy.InputField(prefix="Question:\n", format=str)
-    info = dspy.InputField(prefix="Gathered information:\n", format=str)
+    topic = dspy.InputField(prefix="你讨论的主题：", format=str)
+    conv = dspy.InputField(prefix="问题：\n", format=str)
+    info = dspy.InputField(prefix="收集到的信息：\n", format=str)
     answer = dspy.OutputField(
-        prefix="Now give your response. (Try to use as many different sources as possible and add do not hallucinate.)\n",
+        prefix="现在给出你的回答。（尽量使用多种来源，不要凭空编造。）\n",
         format=str,
     )
 
 
 class TopicExpert(dspy.Module):
-    """Answer questions using search-based retrieval and answer generation. This module conducts the following steps:
-    1. Generate queries from the question.
-    2. Search for information using the queries.
-    3. Filter out unreliable sources.
-    4. Generate an answer using the retrieved information.
+    """使用基于搜索的检索和答案生成来回答问题。本模块执行以下步骤：
+    1. 从问题生成查询。
+    2. 使用查询搜索信息。
+    3. 过滤掉不可靠的来源。
+    4. 使用检索到的信息生成答案。
     """
 
     def __init__(
