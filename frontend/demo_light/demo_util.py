@@ -517,8 +517,8 @@ def set_storm_runner():
         retrieve_top_k=5
     )
 
-    # rm = YouRM(ydc_api_key=st.secrets['YDC_API_KEY'], k=engine_args.search_top_k)
-    rm = DuckDuckGoSearchRM(k=engine_args.search_top_k, safe_search='On', region='us-en')
+    rm = YouRM(ydc_api_key=st.secrets['YDC_API_KEY'], k=engine_args.search_top_k)
+    # rm = DuckDuckGoSearchRM(k=engine_args.search_top_k, safe_search='On', region='us-en')
 
     runner = STORMWikiRunner(engine_args, llm_configs, rm)
     st.session_state["runner"] = runner
