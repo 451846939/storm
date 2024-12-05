@@ -51,10 +51,10 @@ def main():
             st.session_state["selected_page"] = None
 
         if menu_selection == "My Articles":
-            demo_util.clear_other_page_session_state(page_index=2)
+            # demo_util.clear_other_page_session_state(page_index=2)
             MyArticles.my_articles_page()
         elif menu_selection == "Create New Article":
-            demo_util.clear_other_page_session_state(page_index=3)
+            # demo_util.clear_other_page_session_state(page_index=3)
             CreateNewArticle.create_new_article_page()
 
 

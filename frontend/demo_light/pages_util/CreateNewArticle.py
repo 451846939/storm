@@ -103,7 +103,7 @@ def handle_completed():
                                        show_title=True, show_main_article=True)
 
 def create_new_article_page():
-    demo_util.clear_other_page_session_state(page_index=3)
+    # demo_util.clear_other_page_session_state(page_index=3)
 
     if "page3_write_article_state" not in st.session_state:
         st.session_state["page3_write_article_state"] = "not started"
