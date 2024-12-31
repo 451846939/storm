@@ -126,7 +126,7 @@ class WriteOutline(dspy.Module):
 
 
 class WritePageOutline(dspy.Signature):
-    """撰写一个维基百科页面的大纲。
+    """撰写一个新闻页面的大纲。
     请按照以下格式编写：
     1. 使用“# 标题”表示章节标题，“## 标题”表示小节标题，“### 标题”表示子小节标题，依此类推。
     2. 不要包含其他信息。
@@ -134,7 +134,7 @@ class WritePageOutline(dspy.Signature):
     """
 
     topic = dspy.InputField(prefix="您要撰写的主题：", format=str)
-    outline = dspy.OutputField(prefix="撰写维基百科页面大纲：\n", format=str)
+    outline = dspy.OutputField(prefix="撰写新闻页面大纲：\n", format=str)
 
 
 class NaiveOutlineGen(dspy.Module):
@@ -151,7 +151,7 @@ class NaiveOutlineGen(dspy.Module):
 
 
 class WritePageOutlineFromConv(dspy.Signature):
-    """改进一个维基百科页面的大纲。你已经有一个涵盖一般信息的初步大纲。现在，你希望根据信息检索对话中学到的信息来改进它，使其更具信息性。
+    """改进一个新闻页面的大纲。你已经有一个涵盖一般信息的初步大纲。现在，你希望根据信息检索对话中学到的信息来改进它，使其更具信息性。
     请按照以下格式编写：
     1. 使用“# 标题”表示章节标题，“## 标题”表示小节标题，“### 标题”表示子小节标题，依此类推。
     2. 不要包含其他信息。

@@ -161,7 +161,7 @@ class ConvToSection(dspy.Module):
 
 
 class WriteSection(dspy.Signature):
-    """根据收集到的信息撰写维基百科的一个章节。
+    """根据收集到的信息撰写新闻的一个章节。
 
     请按照以下格式撰写：
         1. 使用“# 标题”表示章节标题，“## 标题”表示小节标题，“### 标题”表示子小节标题，依此类推。
