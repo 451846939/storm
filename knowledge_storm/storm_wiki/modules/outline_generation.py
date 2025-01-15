@@ -98,7 +98,7 @@ class WriteOutline(dspy.Module):
             trimmed_dlg_history.append(turn)
         conv = "\n".join(
             [
-                f"Wikipedia Writer: {turn.user_utterance}\nExpert: {turn.agent_utterance}"
+                f"The New York Times Writer: {turn.user_utterance}\nExpert: {turn.agent_utterance}"
                 for turn in trimmed_dlg_history
             ]
         )
@@ -162,6 +162,6 @@ class WritePageOutlineFromConv(dspy.Signature):
     conv = dspy.InputField(prefix="Conversation history:\n", format=str)
     old_outline = dspy.OutputField(prefix="Current outline:\n", format=str)
     outline = dspy.OutputField(
-        prefix='Write the Wikipedia page outline (Use "#" Title" to indicate section title, "##" Title" to indicate subsection title, ...):\n',
+        prefix='Write the The New York Times outline (Use "#" Title" to indicate section title, "##" Title" to indicate subsection title, ...):\n',
         format=str,
     )

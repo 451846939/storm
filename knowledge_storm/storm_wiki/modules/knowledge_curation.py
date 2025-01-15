@@ -126,9 +126,13 @@ class WikiWriter(dspy.Module):
 
 
 class AskQuestion(dspy.Signature):
-    """You are an experienced news writer. You are chatting with an expert to get information for the topic you want to contribute. Ask good questions to get more useful information relevant to the topic.
-    When you have no more question to ask, say "Thank you so much for your help!" to end the conversation.
-    Please only ask a question at a time and don't ask what you have asked before. Your questions should be related to the topic you want to write.
+    """You are a professional journalist preparing to write a news article. You are interviewing an expert to gather insights and information for your story.
+    Your goal is to ask clear, concise, and relevant questions that will help you uncover key details and provide accurate, engaging content for your audience.
+
+    - Ask one question at a time.
+    - Avoid repeating questions you have already asked.
+    - Keep your questions focused on the topic of the news article.
+    - When you have no more questions to ask, conclude the interview politely by saying, "Thank you for your time and valuable insights."
     """
 
     topic = dspy.InputField(prefix="Topic you want to write: ", format=str)
@@ -137,10 +141,15 @@ class AskQuestion(dspy.Signature):
 
 
 class AskQuestionWithPersona(dspy.Signature):
-    """You are an experienced news writer and want to edit a specific page. Besides your identity as a Wikipedia writer, you have specific focus when researching the topic.
-    Now, you are chatting with an expert to get information. Ask good questions to get more useful information.
-    When you have no more question to ask, say "Thank you so much for your help!" to end the conversation.
-    Please only ask a question at a time and don't ask what you have asked before. Your questions should be related to the topic you want to write.
+    """You are a professional journalist with a specific area of expertise, preparing to write a news article on a particular topic.
+    Your expertise allows you to approach the subject with a unique perspective, which you will use to guide your questions.
+
+    You are interviewing an expert to gather insights and information. Your goal is to ask precise, thoughtful, and relevant questions to uncover critical details for your story.
+
+    - Ask one question at a time.
+    - Avoid repeating questions you have already asked.
+    - Tailor your questions to reflect your specialized focus while staying aligned with the news article's topic.
+    - When you have no more questions to ask, politely conclude the interview by saying, "Thank you for your time and valuable insights."
     """
 
     topic = dspy.InputField(prefix="Topic you want to write: ", format=str)
@@ -165,8 +174,14 @@ class QuestionToQuery(dspy.Signature):
 
 
 class AnswerQuestion(dspy.Signature):
-    """你是一位能够有效利用信息的专家。你正在与一位新闻撰稿人交谈，对方希望撰写你熟悉的主题的新闻页面。你已经收集了相关信息，现在将使用这些信息来形成回答。
-    请尽可能使你的回答信息丰富，确保每一句话都基于收集到的信息。如果[收集到的信息]与[主题]或[问题]没有直接关联，请根据可用信息提供最相关的回答。如果无法给出合适的回答，请回复“我无法根据现有信息回答这个问题”，并解释任何信息的限制或缺失之处。
+    """You are an expert skilled in leveraging collected information to provide accurate and comprehensive answers.
+    You are assisting a journalist who is preparing a news article on a topic you are knowledgeable about.
+    Your role is to use the provided information to craft clear and informative answers to their questions.
+
+    - Ensure every sentence in your answer is based on the [collected information].
+    - If the [collected information] does not directly address the [topic] or [question], provide the most relevant response based on the available information.
+    - If no appropriate answer can be given, respond with: "I cannot answer this question based on the available information," and explain any limitations or gaps in the provided information.
+    - Keep your tone professional and concise while ensuring the answer is rich in information, suitable for inclusion in a news article.
     """
 
     topic = dspy.InputField(prefix="你讨论的主题：", format=str)
