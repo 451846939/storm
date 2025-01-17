@@ -20,9 +20,6 @@ args.output_dir/
 """
 
 import os
-import sys
-
-
 
 from flask import Flask, request, jsonify
 
@@ -83,26 +80,33 @@ def run():
         )
 
         # 选择检索器
+        # 从 HTTP 参数中获取检索器及其 key
         retriever = data.get('retriever', 'you')
+        retriever_api_key = data.get('retriever_api_key')
+        if not retriever_api_key:
+            return jsonify({"error": "Missing retriever_api_key in the request."}), 400
+
+        # 选择检索器
         match retriever:
             case 'bing':
-                rm = BingSearch(bing_search_api=os.getenv('BING_SEARCH_API_KEY'), k=engine_args.search_top_k)
+                rm = BingSearch(bing_search_api=retriever_api_key, k=engine_args.search_top_k)
             case 'you':
-                rm = YouRM(ydc_api_key=os.getenv('YDC_API_KEY'), k=engine_args.search_top_k)
+                rm = YouRM(ydc_api_key=retriever_api_key, k=engine_args.search_top_k)
             case 'brave':
-                rm = BraveRM(brave_search_api_key=os.getenv('BRAVE_API_KEY'), k=engine_args.search_top_k)
+                rm = BraveRM(brave_search_api_key=retriever_api_key, k=engine_args.search_top_k)
             case 'duckduckgo':
                 rm = DuckDuckGoSearchRM(k=engine_args.search_top_k, safe_search='On', region='us-en')
             case 'serper':
-                rm = SerperRM(serper_search_api_key=os.getenv('SERPER_API_KEY'), query_params={'autocorrect': True, 'num': 10, 'page': 1})
+                rm = SerperRM(serper_search_api_key=retriever_api_key, query_params={'autocorrect': True, 'num': 10, 'page': 1})
             case 'tavily':
-                rm = TavilySearchRM(tavily_search_api_key=os.getenv('TAVILY_API_KEY'), k=engine_args.search_top_k, include_raw_content=True)
+                rm = TavilySearchRM(tavily_search_api_key=retriever_api_key, k=engine_args.search_top_k, include_raw_content=True)
             case 'searxng':
-                rm = SearXNG(searxng_api_key=os.getenv('SEARXNG_API_KEY'), k=engine_args.search_top_k)
+                rm = SearXNG(searxng_api_key=retriever_api_key, k=engine_args.search_top_k)
             case 'azure_ai_search':
-                rm = AzureAISearch(azure_ai_search_api_key=os.getenv('AZURE_AI_SEARCH_API_KEY'), k=engine_args.search_top_k)
+                rm = AzureAISearch(azure_ai_search_api_key=retriever_api_key, k=engine_args.search_top_k)
             case _:
                 return jsonify({"error": f"Invalid retriever: {retriever}"}), 400
+
 
         # 初始化运行器
         runner = STORMWikiRunner(engine_args, lm_configs, rm)
